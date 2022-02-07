@@ -59,6 +59,10 @@ void function_thread_A()
                     {
                         // pong reception.
                         pong_time = std::chrono::high_resolution_clock::now();
+
+                        // and pong base.
+                        std::string pong_message = "0/PONG_MODULE/";
+                        connection->Write(pong_message);
                     }
                     if(reponse[0] == '1')
                     {
@@ -163,7 +167,7 @@ void function_thread_C()
 
 int main()
 {
-    redis.set("State_base_identifiant", module_identifiant);
+    redis.set("State_module_identifiant", module_identifiant);
 
     // run thread.
     thread_A = std::thread(&function_thread_A);

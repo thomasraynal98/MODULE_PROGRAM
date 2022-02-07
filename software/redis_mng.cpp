@@ -20,6 +20,7 @@ int main()
     redis.set("State_robot", "WAITING");
     redis.set("State_connection_base", "NO_CONNECTION");
     redis.set("State_base_identifiant", "XXXXXXXX");
+    redis.set("State_module_identifiant", "XXXXXXXX");
 
     // DEBUG MODE
 
@@ -47,6 +48,7 @@ int main()
             std::cout << "State_robot=" << *redis.get("State_robot") << std::endl;
             std::cout << "State_connection_base=" << *redis.get("State_connection_base") << std::endl;
             std::cout << "State_base_identifiant=" << *redis.get("State_base_identifiant") << std::endl;
+            std::cout << "State_module_identifiant=" << *redis.get("State_module_identifiant") << std::endl;
         }
     }
 }

@@ -61,7 +61,7 @@ LibSerial::SerialPort* found_micro_port(int debug_mode, bool wait_option)
 
 void send_ping_micro(LibSerial::SerialPort* connection, std::chrono::high_resolution_clock::time_point* ping_time)
 {
-    std::string ping_message = "0/MODULE_PING";
+    std::string ping_message = "0/MODULE_PING/";
     connection->Write(ping_message);
     *ping_time = std::chrono::high_resolution_clock::now();
 }
@@ -109,10 +109,9 @@ void inform_base(sw::redis::Redis* redis, LibSerial::SerialPort* connection)
 {
     /*
         State_status_order
-        State_base_identifiant
     */
 
     std::string message = "1/";
-    message += *(redis->get("State_base_identifiant")) + "/" + *(redis->get("State_status_order")) + "/\n";
+    message += *(redis->get("State_module_identifiant")) + "/\n";
     connection->Write(message);
 }

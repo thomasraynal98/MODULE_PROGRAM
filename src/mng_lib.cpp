@@ -15,7 +15,7 @@ LibSerial::SerialPort* found_micro_port(int debug_mode, bool wait_option)
     for (int i=0; i<4; i++)
     {
         LibSerial::SerialPort* serial_port = new LibSerial::SerialPort;
-        std::string name_port = "/dev/ttyACM" + std::__cxx11::to_string(i);
+        std::string name_port = "/dev/ttyS" + std::__cxx11::to_string(i);
         bool is_openable = true;
 
         if(debug_mode==1) {std::cout << "pointeur:" << serial_port <<"\n";}

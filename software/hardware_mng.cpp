@@ -3,6 +3,8 @@
 #include <wiringPi.h>
 #include <thread>
 #include <chrono>
+#include <libserial/SerialPort.h>
+#include <libserial/SerialStream.h>
 
 #include "mng_lib.h"
 
@@ -15,7 +17,6 @@ int main()
     wiringPiSetup();
     int gpio_id = 0;
     pinMode(gpio_id, OUTPUT);
-    std::string current_status = "CLOSE";
 
     /*
         DESCRIPTION:
@@ -41,23 +42,24 @@ int main()
         std::this_thread::sleep_until(next);
         //! CHRONO TIMER VARIABLE
 
-        if((*(redis->get("State_order"))).compare("OPEN") == 0)
+        if((*(redis.get("State_order"))).compare("OPEN") == 0)
         {
-            if(!current_status.compare("OPEN"))
+            if((*(redis.get("State_door"))).compare("CLOSE") == 0)
             {
                digitalWrite(gpio_id, true); 
-               current_status = "OPEN";
+               redis.set("State_door", "OPEN");
             }
         }
-        else
+        if((*(redis.get("State_order"))).compare("CLOSE") == 0)
         {
-            if(!current_status.compare("CLOSE"))
+            if((*(redis.get("State_door"))).compare("OPEN") == 0)
             {
                digitalWrite(gpio_id, false); 
-               current_status = "CLOSE";
+               redis.set("State_door", "CLOSE");
             }
         }
-        redis->set("State_status_order", "COMPLETED");
+
+        // TODO: if base ask for UNLOCK OR LOCK ORDER.
     }
 
     return 0;

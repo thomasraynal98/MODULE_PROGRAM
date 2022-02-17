@@ -35,7 +35,7 @@ void talk_function()
         std::this_thread::sleep_until(next);
         //! CHRONO TIMER VARIABLE
 
-        if(connection.IsOpen())
+        if(&connection != NULL)
         {
             inform_base(&redis, &connection);
         }
@@ -55,7 +55,7 @@ void read_function()
 
     while(true)
     {
-        if(connection.IsOpen())
+        if(&connection != NULL)
         {
 			std::string reponse;
             try{connection.ReadLine(reponse, stop);}
@@ -78,23 +78,15 @@ void read_function()
 			{
 				// we don't receive ping/pong.
 				connection.Close();
+				connection = NULL;
 				redis.set("State_connection_base", "DISCONNECTED");
 				redis.set("State_base_identifiant", "XXXXXXXX");
 			}
-            else
-            {
-                redis.set("State_connection_base", "CONNECTED");
-            }
         }
         else
         {
-            usleep(1000000);
-			try{
-            connection.Open("/dev/ttyS0");
-            connection.SetBaudRate(LibSerial::BaudRate::BAUD_115200);
-            connection.SetCharacterSize(LibSerial::CharacterSize::CHAR_SIZE_8);
-            connection.SetStopBits(LibSerial::StopBits::STOP_BITS_1);
-            connection.SetParity(LibSerial::Parity::PARITY_NONE);}
+            usleep(500000);
+			try{connection.Open("/dev/ttyS0");}
 			catch(...){}
         }
     }
@@ -105,7 +97,12 @@ int main()
     redis.set("State_module_identifiant", module_identifiant);
 
     connection.Open("/dev/ttyS0");
-	redis.set("State_connection_base", "DISCONNECTED");
+	redis.set("State_connection_base", "CONNECTED");
+
+    connection.SetBaudRate(LibSerial::BaudRate::BAUD_115200);
+    connection.SetCharacterSize(LibSerial::CharacterSize::CHAR_SIZE_8);
+    connection.SetStopBits(LibSerial::StopBits::STOP_BITS_1);
+    connection.SetParity(LibSerial::Parity::PARITY_NONE);
 
     thread_A = std::thread(&talk_function);
     thread_B = std::thread(&read_function);

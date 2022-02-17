@@ -16,9 +16,11 @@ int main()
 {
     // INIT REDIS VARIABLE
     redis.set("State_order", "WAITING");
-    redis.set("State_status_order", "COMPLETED");
+    redis.set("State_module", "UNLOCK");
+    redis.set("State_door", "CLOSE");
     redis.set("State_robot", "WAITING");
     redis.set("State_connection_base", "NO_CONNECTION");
+    
     redis.set("State_base_identifiant", "XXXXXXXX");
     redis.set("State_module_identifiant", "XXXXXXXX");
 
@@ -43,8 +45,10 @@ int main()
 
         if(debug_ON)
         {
+            std::system("clear");
             std::cout << "State_order=" << *redis.get("State_order") << std::endl;
-            std::cout << "State_status_order=" << *redis.get("State_status_order") << std::endl;
+            std::cout << "State_module=" << *redis.get("State_module") << std::endl;
+            std::cout << "State_door=" << *redis.get("State_door") << std::endl;
             std::cout << "State_robot=" << *redis.get("State_robot") << std::endl;
             std::cout << "State_connection_base=" << *redis.get("State_connection_base") << std::endl;
             std::cout << "State_base_identifiant=" << *redis.get("State_base_identifiant") << std::endl;

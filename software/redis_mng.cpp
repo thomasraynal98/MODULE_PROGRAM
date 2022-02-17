@@ -20,7 +20,7 @@ int main()
     redis.set("State_door", "CLOSE");
     redis.set("State_robot", "WAITING");
     redis.set("State_connection_base", "NO_CONNECTION");
-    
+
     redis.set("State_base_identifiant", "XXXXXXXX");
     redis.set("State_module_identifiant", "XXXXXXXX");
 

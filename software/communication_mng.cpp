@@ -58,12 +58,11 @@ void read_function()
         if(connection.IsOpen())
         {
 			std::string reponse;
-            try{connection.ReadLine(reponse, stop);}
+            try{connection.ReadLine(reponse, stop, msTimeout);}
 			catch(...){}
-
 			if(reponse.size() > 1)
 			{
-				if(reponse[0] == '0' && reponse[0] == '1')
+				if(reponse[0] == '0' || reponse[0] == '1')
 				{
 					// We get viable message from base.
 					read_base(&redis, reponse);
@@ -97,7 +96,7 @@ void read_function()
             connection.SetParity(LibSerial::Parity::PARITY_NONE);}
 			catch(...){}
         }
-    }
+    }   
 }
 
 int main()

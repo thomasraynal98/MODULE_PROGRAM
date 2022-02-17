@@ -17,6 +17,8 @@ int main()
     wiringPiSetup();
     int gpio_id = 0;
     pinMode(gpio_id, OUTPUT);
+    int gpio_id2 = 2;
+    pinMode(gpio_id2, OUTPUT);
 
     /*
         DESCRIPTION:
@@ -56,6 +58,22 @@ int main()
             {
                digitalWrite(gpio_id, false); 
                redis.set("State_door", "CLOSE");
+            }
+        }
+        if((*(redis.get("State_order"))).compare("LOCK") == 0)
+        {
+            if((*(redis.get("State_module"))).compare("UNLOCK") == 0)
+            {
+               digitalWrite(gpio_id2, true); 
+               redis.set("State_module", "LOCK");
+            }
+        }
+        if((*(redis.get("State_order"))).compare("UNLOCK") == 0)
+        {
+            if((*(redis.get("State_module"))).compare("LOCK") == 0)
+            {
+               digitalWrite(gpio_id2, false); 
+               redis.set("State_module", "UNLOCK");
             }
         }
 

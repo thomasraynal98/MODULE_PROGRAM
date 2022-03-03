@@ -10,6 +10,8 @@ INCLUDE_DIRECTORIES(include)
 #     ${CMAKE_SOURCE_DIR}
 #)
 
+FIND_PACKAGE(OpenCV 4 REQUIRED)
+
 # set good gcc version.
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -62,3 +64,16 @@ pthread
 hiredis
 wiringPi
 serial)
+
+# INTERFACE OPENCV
+ADD_EXECUTABLE(interface
+software/interface.cpp
+src/mng_lib.cpp 
+include/mng_lib.h)
+
+TARGET_LINK_LIBRARIES(interface
+redis++
+pthread
+hiredis
+serial
+${OpenCV_LIBS})

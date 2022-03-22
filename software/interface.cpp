@@ -245,7 +245,9 @@ void show_function()
         }
 
         ///////////////////////////////////
-        cv::namedWindow("Interface module",cv::WINDOW_AUTOSIZE);
+        // cv::SetWindowProperty("Interface module", cv::WND_PROP_FULLSCREEN, cv::WINDOW_FULLSCREEN);
+        cv::namedWindow("Interface module",cv::WINDOW_NORMAL | cv::WINDOW_FULLSCREEN);
+        cv::moveWindow("Interface module", 0, 0);
         cv::imshow("Interface module", current_visual);
 
         char d=(char)cv::waitKey(25);

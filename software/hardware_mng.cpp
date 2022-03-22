@@ -15,7 +15,7 @@ auto redis = Redis("tcp://127.0.0.1:6379");
 int main()
 {
     wiringPiSetup();
-    int gpio_id = 0;
+    int gpio_id = 15;
     pinMode(gpio_id, OUTPUT);
     int gpio_id2 = 2;
     pinMode(gpio_id2, OUTPUT);

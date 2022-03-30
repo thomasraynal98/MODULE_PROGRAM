@@ -4,6 +4,7 @@
 #include <libserial/SerialStream.h>
 #include <thread>
 #include <chrono>
+#include <sio_client.h>
 
 #include "mng_lib.h"
 

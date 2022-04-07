@@ -25,6 +25,8 @@ int main()
     redis.set("State_base_identifiant", "XXXXXXXX");
     redis.set("State_module_identifiant", "XXXXXXXX");
 
+    redis.set("State_error", "NO_ERROR");
+
     // DEBUG MODE
 
     //! CHRONO TIMER VARIABLE
@@ -54,6 +56,7 @@ int main()
             std::cout << "State_connection_base=" << *redis.get("State_connection_base") << std::endl;
             std::cout << "State_base_identifiant=" << *redis.get("State_base_identifiant") << std::endl;
             std::cout << "State_module_identifiant=" << *redis.get("State_module_identifiant") << std::endl;
+            std::cout << "State_error=" << *redis.get("State_error") << std::endl;
         }
     }
 }

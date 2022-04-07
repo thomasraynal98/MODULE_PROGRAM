@@ -21,11 +21,11 @@ void bind_events(sio::socket::ptr current_socket)
 int main()
 {
     //! VARIABLE.
-    h.connect("http://0.0.0.0:5000");
+    h.connect("http://localhost:5000/");
     bind_events(h.socket());
 
     //! CHRONO TIMER VARIABLE
-    int frequency       = 5;                              // en Hz.
+    int frequency       = 1;                              // en Hz.
     double time_of_loop = 1000/frequency;                  // en milliseconde.
     std::chrono::high_resolution_clock::time_point last_loop_time = std::chrono::high_resolution_clock::now();
     std::chrono::high_resolution_clock::time_point x              = std::chrono::high_resolution_clock::now();
@@ -50,7 +50,8 @@ int main()
         msg_interface->get_map()["State_connection_base"]    = sio::string_message::create(*(redis.get("State_connection_base")));
         msg_interface->get_map()["State_base_identifiant"]   = sio::string_message::create(*(redis.get("State_base_identifiant")));
         msg_interface->get_map()["State_module_identifiant"] = sio::string_message::create(*(redis.get("State_module_identifiant")));
+        msg_interface->get_map()["State_error"]              = sio::string_message::create(*(redis.get("State_error")));
 
-        h.socket()->emit("data_interface", msg_interface);
+        h.socket()->emit("raspberry", msg_interface);
     }
 }

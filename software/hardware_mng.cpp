@@ -17,8 +17,9 @@ int main()
     wiringPiSetup();
     int gpio_id = 15;
     pinMode(gpio_id, OUTPUT);
-    int gpio_id2 = 2;
-    pinMode(gpio_id2, OUTPUT);
+
+    int gpio_id3 = 1;
+    pinMode(gpio_id3, INPUT);
 
     /*
         DESCRIPTION:
@@ -48,36 +49,20 @@ int main()
         {
             if((*(redis.get("State_door"))).compare("CLOSE") == 0)
             {
-               digitalWrite(gpio_id, true); 
-               redis.set("State_door", "OPEN");
-            }
-        }
-        if((*(redis.get("State_order"))).compare("CLOSE") == 0)
-        {
-            if((*(redis.get("State_door"))).compare("OPEN") == 0)
-            {
-               digitalWrite(gpio_id, false); 
-               redis.set("State_door", "CLOSE");
-            }
-        }
-        if((*(redis.get("State_order"))).compare("LOCK") == 0)
-        {
-            if((*(redis.get("State_module"))).compare("UNLOCK") == 0)
-            {
-               digitalWrite(gpio_id2, true); 
-               redis.set("State_module", "LOCK");
-            }
-        }
-        if((*(redis.get("State_order"))).compare("UNLOCK") == 0)
-        {
-            if((*(redis.get("State_module"))).compare("LOCK") == 0)
-            {
-               digitalWrite(gpio_id2, false); 
-               redis.set("State_module", "UNLOCK");
+                digitalWrite(gpio_id, true);
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                digitalWrite(gpio_id, false);
+                redis.set("State_door", "OPEN");
+                redis.set("State_order", "ORDER_COMPLETED");
             }
         }
 
-        // TODO: if base ask for UNLOCK OR LOCK ORDER.
+        //! READ SENSOR LOCKER.
+        if(digitalRead(gpio_id3) == 1)
+        {
+            redis.set("State_door", "CLOSE");
+        }
+
     }
 
     return 0;

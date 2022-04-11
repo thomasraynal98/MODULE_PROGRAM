@@ -11,7 +11,7 @@ python3 /home/mod-delivery-1/Dev/KODA_SCREEN_INTERFACE/server.py &
 sleep 5.0
 cd /home/mod-delivery-1/Dev/KODA_SCREEN_INTERFACE/client
 BROWSER=none npm start & 
-sleep 24.0
+sleep 30.0
 chromium-browser http://localhost:3000/ --start-fullscreen &
 sleep 0.2
 # echo -e 'Start communication_mng C++ program for base connection.'
@@ -21,5 +21,5 @@ echo -e 'Start hardware_mng C++ program.'
 /home/mod-delivery-1/Dev/MODULE_PROGRAM/build/hardware_mng &
 sleep 0.2
 echo -e 'Start socket_interface C++ program for interface communication.'
-/home/mod-delivery-1/Dep/redis-stable/src/socket_com &
+/home/mod-delivery-1/Dev/MODULE_PROGRAM/build/socket_com
                 

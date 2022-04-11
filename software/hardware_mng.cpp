@@ -18,6 +18,8 @@ int main()
     int gpio_id = 15;
     pinMode(gpio_id, OUTPUT);
 
+    int gpio_id2 = 16;
+    pinMode(gpio_id2, INPUT);
     int gpio_id3 = 1;
     pinMode(gpio_id3, INPUT);
 
@@ -58,7 +60,8 @@ int main()
         }
 
         //! READ SENSOR LOCKER.
-        if(digitalRead(gpio_id3) == 1)
+        // std::cout << digitalRead(gpio_id2) << " " << digitalRead(gpio_id3) << std::endl;
+        if(digitalRead(gpio_id2) == 0)
         {
             redis.set("State_door", "CLOSE");
         }

@@ -35,10 +35,12 @@ void talk_function()
         std::this_thread::sleep_until(next);
         //! CHRONO TIMER VARIABLE
 
-        if(connection.IsOpen())
-        {
-            inform_base(&redis, &connection);
-        }
+        try{
+            if(connection.IsOpen())
+            {
+                inform_base(&redis, &connection);
+            }
+        } catch(...){}
     }
 }
 
@@ -47,7 +49,7 @@ void read_function()
 	// Ensure connection variable.
 	auto now  = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> time_span;
-    int time_before_disconected = 500;  
+    int time_before_disconected = 1000;  
 
 	// Read variable.
     char stop = '\n';
@@ -55,11 +57,14 @@ void read_function()
 
     while(true)
     {
+        try{
         if(connection.IsOpen())
         {
 			std::string reponse;
-            try{connection.ReadLine(reponse, stop, msTimeout);}
-			catch(...){}
+            connection.ReadLine(reponse, stop, msTimeout);
+
+            std::cout << reponse << std::endl;
+
 			if(reponse.size() > 1)
 			{
 				if(reponse[0] == '0' || reponse[0] == '1')
@@ -88,14 +93,13 @@ void read_function()
         else
         {
             usleep(1000000);
-			try{
             connection.Open("/dev/ttyS0");
             connection.SetBaudRate(LibSerial::BaudRate::BAUD_115200);
             connection.SetCharacterSize(LibSerial::CharacterSize::CHAR_SIZE_8);
             connection.SetStopBits(LibSerial::StopBits::STOP_BITS_1);
-            connection.SetParity(LibSerial::Parity::PARITY_NONE);}
-			catch(...){}
+            connection.SetParity(LibSerial::Parity::PARITY_NONE);
         }
+        }catch(...){}
     }   
 }
 

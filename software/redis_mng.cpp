@@ -16,7 +16,7 @@ bool debug_ON = true;
 int main()
 {
     // INIT REDIS VARIABLE
-    redis.set("State_order", "WAITING");
+    redis.set("State_order", "OPEN");
     redis.set("State_module", "UNLOCK");
     redis.set("State_door", "CLOSE");
     redis.set("State_robot", "WAITING");

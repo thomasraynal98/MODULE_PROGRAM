@@ -10,7 +10,7 @@ INCLUDE_DIRECTORIES(include)
 #     ${CMAKE_SOURCE_DIR}
 #)
 
-FIND_PACKAGE(OpenCV 4 REQUIRED)
+# FIND_PACKAGE(OpenCV 4 REQUIRED)
 FIND_PACKAGE(websocketpp REQUIRED)
 
 # set good gcc version.
